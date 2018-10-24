@@ -1,0 +1,72 @@
+{%extends 'dca_base.html'%} {%block content%}
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <h3 class="box-title text-center" style="font-weight: 700" ;>
+                    {%if error%}
+                    <span class="text-red">Sorry!<span>
+                    {%else%}
+                    <span class="text-green">Success!</span> {%endif%}
+                </h3>
+            </div>
+            <div class="box-body">
+                {%if message %}
+                <p>
+                    <strong>{{message |safe}}</strong>
+                </p>
+                {%else%}
+                <div id="appointmentPrintable">
+                    <h4 class="text-center">Appointment Information</h4>
+                    <div class="col-lg-6 col-lg-offset-3">
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>Patient Name:</b>
+                                <span class="pull-right">{{patient.name | title}}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Age:</b>
+                                <span class="pull-right">{{patient.age}}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Gender:</b>
+                                <span class="pull-right">{{patient.gender| title}}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Contact:</b>
+                                <span class="pull-right">{{patient.contact_number}}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Appointment ID:</b>
+                                <span class="pull-right">{{appointment.id}}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Dentist:</b>
+                                <span class="pull-right">{{appointment.dentist.name}}</span>
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Branch:</b>
+                                <span class="pull-right">{{appointment.schedule.branch_name|title}}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Appoitnment:</b>
+                                <span class="pull-right">{{appointment.schedule.weekday}} From: {{appointment.schedule.start|time:"g:iA"}} To: {{appointment.schedule.end|time:"g:iA"}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {%endif%}
+
+            </div>
+            <div class="box-footer">
+                <div class="pull-right">
+                    {%if not error%}
+                    <button class="btn bg-maroon btn-flat" id="appointmentConfirmPrint">Print</button> {%endif%}
+                    <a href="/"><button class="btn btn-info btn-flat" href="/">Back To Home</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

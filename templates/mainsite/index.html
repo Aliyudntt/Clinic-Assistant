@@ -1,0 +1,114 @@
+{%extends 'mainsite/main_base.html'%} {%load static%} {%block content%}
+<div class="container-fluid">
+    <br>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="{%static 'images/member.jpg'%}" align="center" alt="Rain" width="460" height="345">
+                <div class="carousel-caption">
+                    <!-- button appointment -->
+                    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#appointmentModal" style="background-color: #00a65a">Book Your Appointment</button>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="{%static 'images/working.jpg'%}" alt="Tree" width="460" height="345">
+                <div class="carousel-caption">
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="{%static 'images/clinic.jpg'%}" alt="Paper" width="460" height="345">
+                <div class="carousel-caption">
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+
+<!--Body-->
+<div class="box box-widget">
+    <div class="box-header box-header-home">
+        <h3>Welcome to Confident Dental Care</h3>
+    </div>
+    <div class="container-fluid">
+        <div class="col-sm-6">
+            <img src="{%static 'images/unit.jpg'%}" style="height: 340px; width: 610px;">
+        </div>
+        <div class="col-sm-6 text-justify">
+            <p>At Confident Dental Care we have your comfort and dental health in mind. Our team is committed to serving to you bring home the bacon a healthy, stunning smile and gain the most effective dental expertise doable. We have a tendency to try
+                this by making a heat and friendly setting therefore you will be able to have the benefit of a relaxed and tranquil atmosphere. We utilize advanced dental technology therefore you will be able to fancy quick and effective dental treatment
+                victimization progressive techniques to reinforce the aesthetics and performance of your smile.</p>
+            <p>Our mission is to create a healthier community by providing transformational oral health care for those experiencing poverty. Every individual has the opportunity to achieve and sustain a healthy smile is our vision.</p>
+            <p>Our dental clinics are run by dental practitioners who have successfully built and operated practices for a number of years. They are kept informed of the latest dental technologies and techniques. Our general dentists’ primary focus is the
+                provision of preventive, restorative, and cosmetic dentistry of a high standard and quality. Dental Corporation dental clinics have specialists in fields which include Endodontics, Periodontics, Orthodontics, Prosthodontics and Oral Surgery.</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="box box-widget">
+                <div class="box-header box-header-home">
+                    <h3 class="box-title">Address</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body box-body-home">
+                    <strong>Gazipur Branch</strong>
+                    <p>
+                        Kabir Market (1st Floor), Rajbari Road, Gazipur. <br/> Consulting Hours: Everyday 4pm to 9pm <br/> Telephone: 01611464101
+                    </p>
+                    <br/>
+                    <strong>Uttara Branch</strong>
+                    <p>
+                        House# 22 (1st floor), Road# 8, Sector# 6, Uttara, Dhaka. <br/> Consulting Hours: Everyday 10am to 1pm &amp; 4pm to 9pm <br/> Telephone: 01725540040
+                    </p>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="box box-widget">
+                <div class="box-header box-header-home">
+                    <h3 class="box-title">Book Your Appointment</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body box-body-home">
+                    <br/>
+                    <p>Click the button to book your appointment or call us on-</p>
+                    <br/><br/>
+                    <p><span class="glyphicon glyphicon-earphone"></span> <b style="text-align: center;">+08801921242439</b> </p><br/><br/>
+                    <!-- button appointment -->
+                    <button type="submit" class="btn btn-success btn-lg" data-toggle="modal" data-target="#appointmentModal" style="background-color: #00a65a">Appointment</button>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+
+
+{%endblock%}

@@ -1,0 +1,333 @@
+{%extends 'dashboard/dashboard_base.html'%} {%load i18n%} {%block content%}
+
+<section class="content-header">
+    <h1 class="text-capitalize text-center">Patient History id: {{history.id}} of {{history.patient.name}}</h1>
+
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            {%include 'messages.html'%}
+        </div>
+    </div>
+
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_1" data-toggle="tab">General Information</a></li>
+            <li class=""><a href="#tab_2" data-toggle="tab">Disease Information</a></li>
+            <li class=""><a href="#tab_3" data-toggle="tab">Symptoms Information</a></li>
+            <li class=""><a href="#tab_4" data-toggle="tab">Prescription</a></li>
+
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+                <div class="box box-widget">
+                    <div class="box-body">
+                        <div class="col-lg-6 col-lg-offset-3">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <b>Patient Name:</b>
+                                    <span class="pull-right">{{history.patient.name}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Appointment ID:</b>
+                                    <span class="pull-right">{{history.appointment.id}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Dentist:</b>
+                                    <span class="pull-right">{{history.dentist.name}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Date:</b>
+                                    <span class="pull-right">{{history.created_at}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Weight:</b>
+                                    <span class="pull-right">{{history.weight}}KG</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Blood Pressure:</b>
+                                    <span class="pull-right">{{history.blood_pressure}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Pulse:</b>
+                                    <span class="pull-right">{{history.pulse}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Temperature:</b>
+                                    <span class="pull-right">{{history.temperature}} F</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Patient Name:</b>
+                                    <span class="pull-right">{{history.patient.name}}</span>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_2">
+                <div class="box box-widget">
+                    <div class="box-body">
+                        <div class="col-lg-6 col-lg-offset-3">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <b>Repiratory Diesease</b>
+                                    <span class="pull-right">{{histoyr.respiratory_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Cardiovascular Diesease</b>
+                                    <span class="pull-right">{{histoyr.cardiovascular_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Hepatobiliary Diesease</b>
+                                    <span class="pull-right">{{histoyr.hepatobiliary_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Viral Hepatitis Diesease</b>
+                                    <span class="pull-right">{{histoyr.viral_hepatitis_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Nurological Diesease</b>
+                                    <span class="pull-right">{{histoyr.nurological_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>TB Diesease</b>
+                                    <span class="pull-right">{{histoyr.tb_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Diabetes Diesease</b>
+                                    <span class="pull-right">{{histoyr.diabetes_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Rheumatic Fever Diesease</b>
+                                    <span class="pull-right">{{histoyr.rheumatic_fever_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Drug Allergy Diesease</b>
+                                    <span class="pull-right">{{histoyr.drug_allergy_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Pregnancy Diesease</b>
+                                    <span class="pull-right">{{histoyr.pregnancy_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Blood Diesease</b>
+                                    <span class="pull-right">{{histoyr.blood_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Surgical History Diesease</b>
+                                    <span class="pull-right">{{histoyr.surgical_history_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Drug History Diesease</b>
+                                    <span class="pull-right">{{histoyr.drug_history_disease | default:"No"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Allergic History Diesease</b>
+                                    <span class="pull-right">{{histoyr.allergic_history_disease | default:"No"}}</span>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_3">
+                <div class="box box-widget">
+                    <div class="box-body">
+                        <div class="col-lg-6 col-lg-offset-3">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <b>Endodontic Examination</b>
+                                    <span class="pull-right">{{history.endodontic_examination| default:"Not Available"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Tooth Number</b>
+                                    <span class="pull-right">{{history.tooth_number| default:"Not Available"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Type_of Affection</b>
+                                    <span class="pull-right">{{history.type_of_affection| default:"Not Available"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Presence of Pain</b>
+                                    <span class="pull-right">{{history.presence_of_pain| default:"Not Available"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Measure of Pain</b>
+                                    <span class="pull-right">{{history.measure_of_pain| default:"Not Available"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Time Posture of Pain</b>
+                                    <span class="pull-right">{{history.time_posture_of_pain| default:"Not Available"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Duration of Pain</b>
+                                    <span class="pull-right">{{history.duration_of_pain| default:"Not Available"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Pain Initiated By</b>
+                                    <span class="pull-right">{{history.pain_initiated_by| default:"Not Available"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Duration of Pain</b>
+                                    <span class="pull-right">{{history.duration_of_pain| default:"Not Available"}}</span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <b>Pain Relived By</b>
+                                    <span class="pull-right">{{history.pain_relieved_by| default:"Not Available"}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.tab-pane -->
+
+            <div class="tab-pane" id="tab_4">
+                <div class="box box-widget">
+                    <div class="box-body">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <div class="list-group">
+
+                                <div class="list-group-item">
+                                    <b>Recommended Medicine</b>
+                                    <div class="pull-right">
+                                        <ol>
+                                            {%for medicine in history.prescription.recommended_medicines.all%}
+                                            <li>
+                                                {{medicine.medicine.medicine_name}}: {{medicine.get_dosage_str}}
+                                                <small>{{medicine.comments}}</small>
+
+                                            </li>
+                                            {%endfor%}
+                                        </ol>
+                                    </div>
+                                </div>
+                                {%if history.prescription.recommended_tests%}
+                                <div class="list-group-item">
+                                    <b>Recommended Tests</b>
+                                    <ol>
+                                        {%for test in history.prescription.recommended_tests.all%}
+                                        <li>{{test.test_name}}</li>
+                                        {%endfor%}
+
+                                    </ol>
+                                </div>
+                                {%endif%}
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {%if history.prescription.test_result%}
+                <div class="box box-widget">
+                    <div class="box-header">
+                        <h4 class="box-title with-border text-muted">Test Results</h4>
+                    </div>
+                    <div class="box-body">
+                        <ol>
+                            {%for test in history.prescription.test_result.all%}
+                            <li>
+                                <b>{{test.test.test_name}}</b><br>
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <b>Date</b>
+                                        <span class="pull-right">{{test.created_at | default:"Not Available"}}</span>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        <b>Result</b>
+                                        <span class="pull-right">{{test.result | default:"Not Available"}}</span>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        <b>Unit</b>
+                                        <span class="pull-right">{{test.unit | default:"Not Available"}}</span>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        <b>Comment</b>
+                                        <span class="pull-right">{{test.comment | default:"Not Available"}}</span>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        <b>Attachmemt</b>
+                                        <span class="pull-right">{%if test.attachment%}
+                                            <a href="{{test.attachment.url}}">Download</a>
+                                            {%else%}
+                                            Not Available{%endif%}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Diagnostic Center</b>
+                                        <span class="pull-right">{{test.diagnostic_center | default:"Not Available"}}</span>
+                                    </li>
+                                </ul>
+                            </li>
+                            {%endfor%}
+
+                        </ol>
+                    </div>
+                </div>
+                {%endif%}
+
+                <div class="box box-widget">
+                    <div class="box-footer">
+                        <a href="/appointment/all/" class="btn btn-flat btn-default">Back</button>
+                        <a class="pull-right btn btn-flat btn-success" href="/prescription/pdf/{{history.id}}/">Make PDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- /.tab-content -->
+    </div>
+
+
+
+</section>
+{%endblock%}

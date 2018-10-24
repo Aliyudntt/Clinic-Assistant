@@ -1,0 +1,116 @@
+{%extends 'dashboard/dashboard_base.html'%}{% load i18n %} {%block content%}
+<section class="content-header">
+    <h1 class="text-capitalize text-center">Appointment Information</h1>
+
+</section>
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            {%include 'messages.html'%}
+        </div>
+    </div>
+
+
+    <div class="box box-widget">
+        <div class="box-header">
+            <h3 class="box-title with-border">Appointment Information</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <label>Patient's Name:</label>
+                    <span>{{patient.name|title}}</span>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Age:</label>
+                    <span>{{patient.age}}</span>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Contact Number:</label>
+                    <span>{{patient.contact_number}}</span>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Gender:</label>
+                    <span>{{patient.gender|title}}</span>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Branch:</label>
+                    <span>{{schedule.branch_name|title}}</span>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Date:</label>
+                    <span>{{appointment.date}}</span>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Schedule:</label>
+                    <span>{{schedule.start|time:"g:iA"}}-{{schedule.end|time:"g:iA"}}</span>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Status:</label>
+                    <span>{{appointment.status|title}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box box-widget">
+        <div class="box-header with-border">
+            <h3 class="box-title">Edit Appointment</h3>
+
+        </div>
+
+        <form id="appointmentForm" method="POST" action="/appointment/edit/{{appointment.id}}/">
+            <div class="box-body">
+                {%csrf_token%}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="date">Change Appointment Date</label>
+                            <input type="text" class="form-control" name="date" id="idate" placholder="Date of your appointment">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="schedule">Change Appointment Time</label>
+                            <select class="form-control" name="schedule" id="schedule">
+                                {%for s in schedules%}
+                                    <option value="{{s.id}}" {%if s.id == schedule.id %}selected{%endif%}>{{s.weekday}} {{s.start|time:"g:iA"}}-{{s.end|time:"g:iA"}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="status">Change Appointment Status</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value="pending" {%if appointment.status == "pending"%} selected{%endif%}>Pending</option>
+                                <option value="visited" {%if appointment.status == "visited"%} selected{%endif%}>Visited</option>
+                                <option value="cancel" {%if appointment.status == "cancel"%} selected{%endif%}>Cancel</option>
+                                <option value="absent" {%if appointment.status == "absent"%} selected{%endif%}>Absent</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="box-footer">
+                <a href="/appointment/today/"><button type="button" class="btn btn-flat">Cancel</button></a>
+                <button type="submit" class="btn btn-flat btn-success pull-right">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</section>
+{%endblock%}

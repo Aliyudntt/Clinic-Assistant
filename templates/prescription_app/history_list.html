@@ -1,0 +1,50 @@
+{%extends 'dashboard/dashboard_base.html'%} {%load i18n%} {%block content%}
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1 class="text-capitalize text-center">Patient Histories</h1>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            {%include 'messages.html'%}
+        </div>
+    </div>
+
+
+
+    <div class="box box-widget">
+
+        <div class="box-body">
+            <table id="historyTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Patient ID</th>
+                        <th>Patient Name</th>
+                        <th>Appointment Id</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for history in histories%}
+                    <tr>
+                        <td>{{history.id}}</td>
+                        <td>{{history.patient.name}}</td>
+                        <td>{{history.appointment_id}}</td>
+                        <td>{{history.created_at}}</td>
+                        <td>
+                            <a class="btn btn-flat btn-info" href="/prescription/history/{{history.id}}/">View</a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{%endblock%}

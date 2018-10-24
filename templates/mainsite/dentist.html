@@ -1,0 +1,21 @@
+{%extends 'mainsite/main_base.html'%} {%load static%} {%block content%} {%for dentist in dentists%}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <img src="{{dentist.get_image}}" style="height: 240px; width: 180px;">
+        </div>
+        <div class="col-lg-4 text-success">
+            <h3>{{dentist.name}}</h3>
+            <p>
+                {{dentist.about}}
+            </p>
+            <div>
+                <h5>Schedule: </h5>
+                {%for schedule in dentist.schedule.all%}
+                <p>{{schedule.day}} {{schedule.start|time:"g:iA"}}-{{schedule.end|time:"g:iA"}}</p>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+<hr> {%endfor%} {%endblock%}

@@ -1,0 +1,17 @@
+{%extends 'dashboard/dashboard_base.html'%} {%block content%}
+<section class="content-header">
+    <h1 class="text-capitalize text-center">
+        Welcome to your Dashboard, <span class="text-blue">{{request.user.name}}</span>
+    </h1>
+
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            {%include 'messages.html'%}
+        </div>
+    </div>
+
+</section>
+{%endblock%}

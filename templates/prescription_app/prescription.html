@@ -1,0 +1,433 @@
+{%extends 'dashboard/dashboard_base.html'%} {%load i18n%} {%block content%}
+
+<section class="content-header">
+    <h1 class="text-capitalize text-center">Prescribe and Record Patient History</h1>
+
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            {%include 'messages.html'%}
+        </div>
+    </div>
+    <form id="historyForm" action="/prescription/prescribe/{{appointment_id}}/" method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_1" data-toggle="tab">General Information</a></li>
+                <li class=""><a href="#tab_2" data-toggle="tab">Disease Information</a></li>
+                <li class=""><a href="#tab_3" data-toggle="tab">Symptoms Information</a></li>
+                <li class=""><a href="#tab_4" data-toggle="tab">Prescription</a></li>
+
+                <li class="pull-right">
+                    <button type="submit" class="btn btn-flat btn-success">Save</button>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Weight</label>
+                                <input type="number" class="form-control" min="1" name="weight" id="weigth">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Temperature</label>
+                                <input type="number" class="form-control" step="0.5" min="1" name="temperature" id="temperature">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Pulse</label>
+                                <input type="number" class="form-control" min="1" name="pulse" id="pulse">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Blood Pressure</label>
+                                <input type="text" class="form-control" name="blood_pressure" id="blood_pressure">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_2">
+                    <div class="row">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="respiratory_disease" name="respiratory_disease" > Respiratory Disease</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="cardiovascular_disease" name="cardiovascular_disease" > Cardio-Vascular Disease</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="hepatobiliary_disease" name="hepatobiliary_disease" > Hepatobiliary Disease</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="viral_hepatitis_disease" name="viral_hepatitis_disease" > Viral Hepatitis</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="nurological_disease" name="nurological_disease" > Nurological Disease</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="tb_disease" name="tb_disease" > TB</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="diabetes_disease" name="diabetes_disease" > Diabetes</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="rheumatic_fever_disease" name="rheumatic_fever_disease" > Rheumatic Fever</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="drug_allergy_disease" name="drug_allergy_disease" > Drug Allergy</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="pregnancy_disease" name="pregnancy_disease" > Pregnancy</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="blood_disease" name="blood_disease" > Blood Disease</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="surgical_history_disease" name="surgical_history_disease" > Surgical History</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="drug_history_disease" name="drug_history_disease" > Drug History</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox icheck">
+                                    <label class><input type="checkbox" id="allergic_history_disease" name="allergic_history_disease" > Allergic History</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_3">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Endodontic Examinatoin</label>
+                                <input type="text" class="form-control" name="endodontic_examination" id="endodontic_examination" maxlength="100">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Tooth Number</label>
+                                <input type="text" class="form-control" name="tooth_number" id="tooth_number" maxlength="30">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Type of Affection</label>
+                                <input type="text" class="form-control" name="type_of_affection" id="type_of_affection" maxlength="100">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Presence of Pain</label>
+                                <input type="text" class="form-control" name="presence_of_pain" id="presence_of_pain" maxlength="30">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Measure of Pain</label>
+                                <input type="text" class="form-control" name="measure_of_pain" id="measuer_of_pain" maxlength="30">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Time Posture of Pain</label>
+                                <input type="text" class="form-control" name="time_posture_of_pain" id="time_posture_of_pain" maxlength="30">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Duration of Pain</label>
+                                <input type="text" class="form-control" name="duration_of_pain" id="duration_of_pain" maxlength="30">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Pain Initiated By</label>
+                                <input type="text" class="form-control" name="pain_initiated_by" id="pain_initiated_by" maxlength="30">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Pain Relieved By</label>
+                                <input type="text" class="form-control" name="pain_relieved_by" id="pain_relieved_by" maxlength="30">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+
+                <div class="tab-pane" id="tab_4">
+                    <div class="box box-widget">
+                        <div class="box-header">
+                            <h4 class="box-title with-border text-muted">Add Recommended Diagnostic Tests</h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="tests">Select Diagnostic Tests</label>
+                                <select id="tests" class="form-control" name="tests" multiple="multiple" style="width:100%">
+                                    {%for test in tests%}
+                                    <option value="{{test.id}}">{{test.test_name}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box box-widget">
+                        <div class="box-header">
+                            <h4 class="box-title with-border text-muted">Recommended Medicines</h4>
+                        </div>
+                        <div class="box-body">
+                            <div id="medForm">
+
+                                <!-- Form template-->
+                                <div id="medForm_template">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Medicine</label>
+                                                <select class="form-control medicine_name" name="medicine_name_#index#" id="medForm_#index#_medicine_name" style="width:100%">
+                                                {%for medicine in medicines%}
+                                                <option value="{{medicine.id}}">{{medicine.medicine_name}} {{medicine.preparation}}mg</option>
+                                                {%endfor%}
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Dosage Quantity</label>
+                                                <input type="number" class="form-control" name="medicine_dosage_qty_#index#" id="medForm_#index#_medicine_qty" min="1">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Dosage Interval (Hours)</label>
+                                                <input type="number" class="form-control" name="medicine_dosage_interval_#index#" id="medForm_#index#_dosage_interval">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Comments</label>
+                                                <input type="text" class="form-control col-lg-3" name="medicine_comments_#index#" id="medForm_#index#_comments">
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <button type="button" class="btn btn-flat btn-danger" id="medForm_remove_current">Remove</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- /Form template-->
+
+                                <!-- No forms template -->
+                                <div id="medForm_noforms_template">No Medicines Added Yet</div>
+                                <!-- /No forms template-->
+
+                                <!-- Controls -->
+                                <div class="medForm_controls">
+                                    <div class="col-lg-3">
+                                        <button type="button" class="btn btn-flat btn-info" id="medForm_add">Add A Medicine</button>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <button type="button" class="btn btn-flat btn-danger" id="medForm_remove_all">Remove All</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="box box-widget">
+                        <div class="box-header">
+                            <h4 class="box-title with-border text-muted">Add Test Results</h4>
+                        </div>
+                        <div class="box-body">
+                            <div id="testResultForm">
+                                <div id="testResultForm_template">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Test</label>
+                                                <select class="form-control test-results" name="test_id_#index#" id="test_id_#index" style="width:100%">
+                                                    {%for test in tests%}
+                                                        <option value="{{test.id}}">{{test.test_name}}</option>
+                                                    {%endfor%}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <label>Unit</label>
+                                            <select name="test_unit_#index#" id="test_unit_#index" class="form-control">
+                                                <option value="mg/dL">mg/dL</option>
+                                                <option value="pH">pH</option>
+                                                <option value="units/L">units/L</option>
+                                                <option value="mEq/dL">mEq/dL</option>
+                                                <option value="%">%</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Reuslt</label>
+                                                <input type="text" class="form-control" name="test_result_#index#" id="test_result_#index#" maxlength="100">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Attachment</label>
+                                                <input type="file" id="test_attachment_#index#" name="test_attachment_#index#">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Diagnostic Center</label>
+                                                <input type="text" maxlength="200" class="form-control" name="test_diagnostic_center_#index#" id="test_diagnostic_center_#index#">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Comment</label>
+                                                <textarea name="test_comment_#index#" class="form-control" id="test_comment_#index#"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button type="button" class="btn btn-flat btn-danger" id="testResultForm_remove_current">Remove</button>
+                                </div>
+
+                                <div id="testResultForm_noforms_template">No Test Result Available</div>
+
+                                <div id="testResultForm_controls">
+
+                                    <button type="button" class="btn btn-flat btn-info" id="testResultForm_add">Add Test Result</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <!-- /.tab-content -->
+        </div>
+    </form>
+
+
+
+</section>
+{%endblock%}

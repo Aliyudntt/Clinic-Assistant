@@ -1,0 +1,54 @@
+{%extends 'dashboard/dashboard_base.html'%} {%load i18n%} {%block content%}
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1 class="text-capitalize text-center">List of Tests</h1>
+        </div>
+        <div class="col-lg-6">
+            <div class="col-lg-3 pull-right">
+                <a class="btn btn-block btn-flat bg-aqua-gradient" href="/prescription/test/add/"><i class="fa fa-plus"></i> Add Test</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            {%include 'messages.html'%}
+        </div>
+    </div>
+
+
+
+    <div class="box box-widget">
+
+        <div class="box-body">
+            <table id="testTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Test Name</th>
+                        <th>Test Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for test in tests%}
+                    <tr>
+                        <td>{{test.id}}</td>
+                        <td>{{test.test_name}}</td>
+                        <td>
+                            {%if test.test_type == 1 %}
+                            <span>Test Result is numeric</span> {%elif test.test_type == 2 %}
+                            <span>Test Result is categorical</span> {%else%}
+                            <span>Test Result contains attachment</span> {%endif%}
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{%endblock%}

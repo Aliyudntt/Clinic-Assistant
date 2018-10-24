@@ -1,0 +1,54 @@
+{%extends 'dashboard/dashboard_base.html'%} {%load i18n%} {%block content%}
+
+<section class="content-header">
+    <h1 class="text-capitalize text-center">Add A Test</h1>
+
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            {%include 'messages.html'%}
+        </div>
+    </div>
+
+    <div class="box box-widget">
+        <form id="testForm" method="POST" action="/prescription/test/add/">
+            {%csrf_token%}
+            <div class="box-body">
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="test_name">Test Name</label>
+                            <input type="text" class="form-control" name="test_name" id="test_name" maxlength="100" required>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="test_type">Test Type</label>
+                            <select class="form-control" name="test_type" id="test_type" required>
+                                <option value="" disabled selected>Select A Test Type</option>
+                                <option value="1">Test Result is Numeric</option>
+                                <option value="2">Test Result is Categorical</option>
+                                <option value="3">Test Result contains attachment</opttion>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="box-footer">
+
+                <a href="/prescription/tests/"><button type="button" class="btn btn-flat">Cancel</button></a>
+                <button type="submit" class="btn btn-flat btn-success pull-right">Submit</button>
+
+            </div>
+        </form>
+    </div>
+
+</section>
+{%endblock%}

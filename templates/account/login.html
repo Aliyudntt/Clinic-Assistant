@@ -1,0 +1,43 @@
+{%extends 'account/account_base.html'%}{% load widget_tweaks %} {%block content%}
+<div class="login-box">
+    <div class="login-logo">
+        <a href="/"><b>Confident Dental Care</b></a>
+    </div>
+    <div class="login-box-body">
+        <p class="login-box-msg">Login to your account</p>
+        <form action="{% url 'account_login' %}" name="loginForm" id="loginForm" method="POST">
+            <div class="error">
+                {%for field in form%}
+                <p>{{field.errors}}</p> {%endfor%} {%for error in form.non_field_errors%}
+                <p>{{error}}</p>
+                {%endfor%}
+            </div>
+            {%csrf_token%}
+            <div class="form-group has-feedback">
+                {%render_field form.login class="form-control" required="true"%}
+            </div>
+            <div class="form-group has-feedback">
+                {%render_field form.password class="form-control" required="true"%}
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-xs-8">
+                    <div class="checkbox icheck">
+                        <label>
+                            {%render_field form.remember%} Remember Me
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-4">
+                    <button type="submit" class="btn btn-success btn-block btn-flat">Login</button>
+                </div>
+            </div>
+            <a class="button secondaryAction" href="{% url 'account_reset_password' %}">Forgot Password?</a>
+    </div>
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" /> {% endif %}
+
+    </form>
+
+</div>
+</div>
+{%endblock%}

@@ -1,0 +1,68 @@
+{%extends 'mainsite/main_base.html'%}{%load static%} {%block content%}
+<div class="row" style="margin-bottom: 15px;">
+    <div class="col-sm-6">
+        <div class="box box-widget">
+            <div class="box-header-contact with-border">
+                <h3 class="box-title">Gazipur Branch</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body-contact">
+                <p>
+                    Kabir Market (1st Floor), Rajbari Road, Gazipur. <br/> Consulting Hours: Everyday 4pm to 9pm <br/>
+                    <p><span class="glyphicon glyphicon-phone"></span> Mobile: 01921242439, 01611464101. <br/></p>
+                    <p><span class="glyphicon glyphicon-earphone"></span> Telephone: 9261109. </p>
+                </p>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="box box-widget">
+            <div class="box-header-contact with-border">
+                <h3 class="box-title">Uttara Branch</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body-contact">
+                <p>
+                    House# 22 (1st floor), Road# 8, Sector# 6, Uttara, Dhaka. <br/> Consulting Hours: Everyday 10am to 1pm &amp; 4pm to 9pm <br/>
+                    <p><span class="glyphicon glyphicon-phone"></span> Mobile: 01725540040. </p>
+                </p>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!--     MAP       -->
+<div id="map-container" class="col-md-6"></div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script>
+    function init_map() {
+        var var_location = new google.maps.LatLng(23.873751, 90.396454);
+
+        var var_mapoptions = {
+            center: var_location,
+            zoom: 14
+        };
+
+        var var_marker = new google.maps.Marker({
+            position: var_location,
+            map: var_map,
+            title: "Dhaka"
+        });
+
+        var var_map = new google.maps.Map(document.getElementById("map-container"),
+            var_mapoptions);
+
+        var_marker.setMap(var_map);
+    }
+    google.maps.event.addDomListener(window, 'load', init_map);
+</script>
+{%endblock%}

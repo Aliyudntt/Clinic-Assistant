@@ -1,0 +1,100 @@
+{%extends 'dashboard/dashboard_base.html'%}{% load i18n %} {%block content%}
+<section class="content-header">
+    <h1 class="text-capitalize text-center">Add Unregistered Appointment</h1>
+
+</section>
+
+<section class="content">
+    <div class="box box-widget">
+        <form id="appointmentForm" action="/appointment/dentist/add/" method="POST">
+            <div class="box-body">
+                <div class="error" id="appointmentFormError">
+
+                </div>
+                {%csrf_token%}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" name="name" id="name" maxlength="100" placeholder="Pateint's Name" required/>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" class="form-control" name="age" id="age" min="1" max="100" placeholder="Pateint's Age" required/>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <div class="radio icheck appointmentRadioGroup" id="genderGroup">
+                                <label class id="genderMale"><input type="radio" id="male" name="gender" value="male" checked> Male</label>
+                                <label class><input type="radio" id="female" name="gender" value="female"> Female<label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="contact_number">Pateint's Contact Number</label>
+                                <input type="text" class="form-control" name="contact_number" id="contact_number" maxlength="16" minlength="16" placeholder="Pateint's Contact Number" required/>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-gropu">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" name="email" id="email" maxlength="100" placeholder="Patient's Email (optional)" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="branch">Branch</label>
+                                <div class="radio icheck appointmentRadioGroup" id="branch">
+                                    <label class id="branchUttara"><input type="radio" id="uttara" name="branch" value="uttara" checked> Uttara</label>
+                                    <label class><input type="radio" id="gazipur" name="branch" value="gazipur"> Gazipur<label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                 <label for="date">Appointment Date</label>
+                                    <input type="text" class="form-control" name="date" id="date" placholder="Date of your appointment" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="schedule">Select Appointment Time</label>
+                                    <select class="form-control" name="schedule" id="schedule" required>
+                                            <option value="" disabled selected>Select A Date First</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <button type="button" onclick="resetForm('#appointmentForm')" class="btn btn-flat btn-info">Reset</button>
+                            <button type="submit" class="btn btn-flat btn-success">Submit</button>
+                        </div>
+                    </div>
+        </form>
+        </div>
+
+</section>
+{%endblock%}

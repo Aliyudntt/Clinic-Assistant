@@ -1,0 +1,61 @@
+{%extends 'dashboard/dashboard_base.html'%} {%load i18n%} {%block content%}
+
+<section class="content-header">
+    <h1 class="text-capitalize text-center">Add A Medicine</h1>
+
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            {%include 'messages.html'%}
+        </div>
+    </div>
+
+    <div class="box box-widget">
+        <form id="medicineForm" method="POST" action="/prescription/medicine/add/">
+            {%csrf_token%}
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="medcine_name">Medicine Name</label>
+                            <input type="text" class="form-control" name="medicine_name" id="medicine_name" maxlength="100" required="true">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="preparation">Preparation (mg)</label>
+                            <input type="number" step="0.01" class="form-control" name="preparation" id="preparation" required="true">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="manufacturer">Manufacturer</label>
+                            <input type="text" name="manufacturer" id="manufacturer" class="form-control" maxlength="100" required>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="medicine_description">Medicine Description</label>
+                            <textarea name="medicine_description" id="medicine_description" class="form-control" required></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="box-footer">
+
+                <a href="/prescription/medicines/"><button type="button" class="btn btn-flat">Cancel</button></a>
+                <button type="submit" class="btn btn-flat btn-success pull-right">Submit</button>
+
+            </div>
+        </form>
+    </div>
+
+</section>
+{%endblock%}
