@@ -1,0 +1,35 @@
+{
+    "name": "dynamicForm",
+    "title": "jQuery dynamicForm",
+    "description": "jQuery plugin for dynamic form section (including form field) management.",
+    "keywords": [
+        "form",
+        "dynamic",
+        "input"
+    ],
+    "version": "1.0.3",
+    "author": {
+        "name": "Ian Ashcroft",
+        "url": "https://github.com/nianja/dynamicForm/blob/master/dynamicForm.js"
+    },
+    "maintainers": [
+        {
+            "name": "Ian Ashcroft",
+            "email": "ianashcroft11@gmail.com",
+            "url": "https://github.com/nianja/dynamicForm/"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "Affero GPL",
+            "url": "https://github.com/nianja/dynamicForm/blob/master/LICENSE"
+        }
+    ],
+    "bugs": "https://github.com/nianja/dynamicForm/issues",
+    "homepage": "http://nianja.github.io/dynamicForm/",
+    "docs": "https://github.com/nianja/dynamicForm/wiki/",
+    "download": "https://github.com/nianja/dynamicForm/archive/master.zip",
+    "dependencies": {
+        "jquery": ">=1.5"
+    }
+}
