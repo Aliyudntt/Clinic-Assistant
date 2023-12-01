@@ -21,7 +21,7 @@ $("#date").on('changeDate', function() {
     $("#schedule").append($("<option>", { 'value': '', 'text': "Select A Dentist First", 'disabled': true, 'selected': true }));
 
 
-    $.post("/appointment/dentist_schedules/", { "day": day, 'branch': branch }, function(response) {
+    $.post("/patient_appointment/dentist_schedules/", { "day": day, 'branch': branch }, function(response) {
 
         dentistlist = response.data;
 

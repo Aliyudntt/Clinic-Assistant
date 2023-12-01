@@ -34,9 +34,9 @@ APPOINTMENT_STATUS = [
 ]
 
 class Appointment(models.Model):
-    patient = models.ForeignKey(Patient, related_name="appointment")
-    dentist = models.ForeignKey(AuthUser, related_name="appointment")
-    schedule = models.ForeignKey(Schedule, related_name="appointment")
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="appointment")
+    dentist = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name="appointment")
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="appointment")
     date = models.DateField()
     status = models.CharField(max_length=9, choices=APPOINTMENT_STATUS, default='pending')
     secret = models.CharField(max_length=8,blank=True)
@@ -96,3 +96,6 @@ def send_appointment_notification(sender,instance, created, **kwargs):
             date = datetime.datetime.combine(instance.date, instance.schedule.start)
             eta = date - datetime.timedelta(hours=2)
             appointment_reminder_service(to,message,eta)
+           
+    def get_absolute_url(self):
+        return f"/appointment/{self.id}/"

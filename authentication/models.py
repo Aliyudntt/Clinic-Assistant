@@ -9,8 +9,8 @@ from django.contrib.auth.models import (
 
 
 BRANCH_CHOICES=[
-    ('gazipur', 'GAZIPUR'),
-    ('uttara', 'UTTARA'),
+    ('main campus', 'MAIN CAMPUS'),
+    ('city campus', 'CITY CAMPUS'),
 ]
 
 
@@ -107,7 +107,7 @@ WEEK_DAYS = [
 
 
 class Schedule(models.Model):
-    dentist = models.ForeignKey(AuthUser, related_name='schedule')
+    dentist = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name='schedule')
     start = models.TimeField()
     end = models.TimeField()
     branch_name = models.CharField(max_length=15, choices=BRANCH_CHOICES, default="uttara")
@@ -116,12 +116,11 @@ class Schedule(models.Model):
 
 
     def validate_unique(self, *args, **kwargs):
-        super(Schedule, self).validate_unique(*args,**kwargs)
-        if self.start >= self.end:
-            raise ValidationError({
-                NON_FIELD_ERRORS: ["Schedule Start time cannot be greater than schedule end time"]
-            })
-
+          super(Schedule, self).validate_unique(*args, **kwargs)
+          if self.start and self.end and self.start >= self.end:
+              raise ValidationError({
+            NON_FIELD_ERRORS: ["Schedule Start time cannot be greater than schedule end time"]
+        })
     def __str__(self):
         return "%s %s %s-%s" %(self.dentist.name, self.weekday, str(self.start), str(self.end))
 

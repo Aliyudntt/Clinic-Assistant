@@ -127,14 +127,14 @@ def prescription_add(request, appointment_id):
                     recommended_medicine_list[idx][newKey] = medicine_dict[jkey]
 
         
-        test_reuslt_list = {}
+        test_result_list = {}
         for key in test_result_dict:
             idx = key.split("_")[-1]
-            test_reuslt_list[idx] = {}
-            for jkey in test_result_dict:
-                if jkey.endswith("_"+idx):
-                    newKey = jkey.replace("_"+idx,'')
-                    test_reuslt_list[idx][newKey] = test_reuslt_dict[jkey]
+            test_result_list[idx] = {}
+        for jkey in test_result_dict:
+            if jkey.endswith("_" + idx):
+                newKey = jkey.replace("_" + idx, "")
+                test_result_list[idx][newKey] = test_result_dict[jkey]
         
        
         
@@ -164,8 +164,8 @@ def prescription_add(request, appointment_id):
             except:
                 pass
 
-        for key in test_reuslt_list:
-            test_result = test_reuslt_list[key]
+        for key in test_result_list:
+            test_result = test_result_list[key]
             try:
                 TestResult.objects.create(
                     test_id = test_result['test_id'],

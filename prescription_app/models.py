@@ -16,7 +16,7 @@ class Medicine(models.Model):
     preparation = models.DecimalField(max_digits=5, decimal_places=2)
     manufacturer = models.CharField(max_length=100)
     medicine_description = models.TextField()
-    added_by = models.ForeignKey(AuthUser, null=True, blank=True)
+    added_by = models.ForeignKey(AuthUser, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateField(auto_now=True)
 
 
@@ -36,7 +36,7 @@ class Test(models.Model):
     test_name = models.CharField(max_length=100)
     test_type = models.IntegerField(choices=TEST_TYPE_CHOICES)
     created_at = models.DateField(auto_now=True)
-    added_by = models.ForeignKey(AuthUser, null=True, blank=True)
+    added_by = models.ForeignKey(AuthUser, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.test_name
@@ -59,9 +59,9 @@ TEST_RESULT_UNIT_CHOICES = [
 
 #class General Information
 class History(models.Model):
-    patient = models.ForeignKey(Patient, related_name="history")
-    appointment = models.OneToOneField(Appointment, related_name="history")
-    dentist = models.ForeignKey(AuthUser, related_name='history')
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="history")
+    appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE, related_name="history")
+    dentist = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name='history')
     weight = models.PositiveIntegerField(blank=True, null=True)
     temperature = models.DecimalField(max_digits=5, decimal_places=2,blank=True, null=True)
     pulse = models.PositiveIntegerField(blank=True, null=True)
@@ -102,7 +102,7 @@ class History(models.Model):
 
 #model for Prescription
 class Prescription(models.Model):
-    history = models.OneToOneField(History, related_name='prescription')
+    history = models.OneToOneField(History, on_delete=models.CASCADE, related_name='prescription')
     recommended_tests = models.ManyToManyField(Test)
     created_at = models.DateTimeField(auto_now=True)
 
@@ -111,8 +111,8 @@ class Prescription(models.Model):
 
 #test Result
 class TestResult(models.Model):
-    test = models.ForeignKey(Test)
-    prescription = models.ForeignKey(Prescription, related_name='test_result')
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE, related_name='test_result')
     unit = models.CharField(max_length=10,choices=TEST_RESULT_UNIT_CHOICES, blank=True, null=True)
     result = models.CharField(max_length=100,blank=True,null=True)
     attachment = models.FileField(upload_to='test_results/', blank=True, null=True)
@@ -138,8 +138,8 @@ class TestResult(models.Model):
 
 
 class MedicineRecommendations(models.Model):
-    medicine = models.ForeignKey(Medicine)
-    prescription = models.ForeignKey(Prescription, related_name='recommended_medicines')
+    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
+    prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE, related_name='recommended_medicines')
     dosage_interval = models.PositiveIntegerField()
     comments = models.CharField(max_length=100, null=True, blank=True)
     dosage_qty = models.PositiveIntegerField(default=1)

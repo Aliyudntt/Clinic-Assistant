@@ -36,4 +36,4 @@ def treatment(request):
 
 
 def gallary(request):
-    return render(request, 'mainsite/gallary.html', {'title':'CDC | Gallary'})
+    return render(request, 'mainsite/gallary.html', {'title':'CDC | Gallery'})

@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -85,6 +86,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DCA.wsgi.application'
 
+# Add the DEFAULT_AUTO_FIELD setting
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -123,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Dhaka'
+TIME_ZONE = 'Africa/Lagos'
 
 USE_I18N = True
 
@@ -155,24 +158,23 @@ LOGIN_REDIRECT_URL="/authentication/dashboard/"
 LOGOUT_REDIRECT_URL="/accounts/login/"
 
 
-BROKER_URL = "redis://localhost:6379"
-BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json', 'application/pdf','pickle',]
-CELERY_TASK_SERIALIZER = 'pickle'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Asia/Dhaka'
+broker_url = 'redis://localhost:6379/0'
+result_backend = 'redis://localhost:6379/0'
+accept_content = ['application/json', 'application/pdf', 'pickle']
+task_serializer = 'pickle'
+result_serializer = 'json'
+timezone= 'Africa/Lagos'
 
 
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://localhost:6379",
+        "LOCATION": "redis://localhost:6379/0",
         "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
-        "KEY_PREFIX": "DCA"
+        "KEY_PREFIX": "DCA",
     }
 }
 
-CACHE_TTL = 60*10
+CACHE_TTL = 600  # 10 minutes

@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.urls import path, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
@@ -21,15 +21,14 @@ from django.conf.urls.static import static
 from authentication import views as authViews
 
 urlpatterns = [
-    url('', include('mainsite.urls')),
-    url(r'^accounts/password/change/$', authViews.pass_change_view),
-    url(r'^accounts/', include('allauth.urls')),
-    url(r'^authentication/', include('authentication.urls')),
-    url(r'^appointment/', include('patient_appointment.urls')),
-    url(r'^prescription/', include('prescription_app.urls')),
-    url(r'^admin/', admin.site.urls),
+    path('', include('mainsite.urls')),
+    path('accounts/password/change/', authViews.pass_change_view),
+    path('accounts/', include('allauth.urls')),
+    path('authentication/', include('authentication.urls')),
+    path('appointment/', include('patient_appointment.urls')),
+    path('prescription/', include('prescription_app.urls')),
+    path('admin/', admin.site.urls),
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

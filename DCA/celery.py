@@ -5,9 +5,12 @@ from django.conf import settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DCA.settings")
 app = Celery("DCA")
 
-app.config_from_object('django.conf:settings')
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+app.config_from_object(settings, namespace='CELERY')
+app.autodiscover_tasks()
+
+# Add the following line to enable broker connection retries on startup
+app.conf.broker_connection_retry_on_startup = True
 
 @app.task(bind=True)
 def debug_task(self):
-    print('Request: {0!r}'.format(self.request))
+    print(f'Request: {self.request!r}')

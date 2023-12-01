@@ -8,6 +8,8 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import HttpRequest
+from django.contrib.auth.models import User
 
 
 from authentication.models import AuthUser
@@ -66,16 +68,43 @@ def schedule_appointmet(request):
 
 @csrf_exempt
 def schedule_list(request):
-    if request.is_ajax():
+    if request.method == 'POST':
         day = request.POST.get('day')
         branch = request.POST.get('branch')
-        #print(request.POST)
-        dentists_set = set(AuthUser.objects.prefetch_related().filter(Q(schedule__weekday=day)| Q(schedule__weekday='All'), is_active=True, is_admin=False, schedule__branch_name = branch))
+
+        print(request.POST)
+        
+        dentists_set = set(
+            User.objects.filter(
+                Q(schedule__weekday=day) &
+                Q(schedule__branch_name=branch) &
+                Q(is_active=True) &
+                Q(is_superuser=False)
+            ).prefetch_related('schedule')
+        )
+
         if len(dentists_set) == 0:
-            return JsonResponse({'message': "Sorry no dentist is available"},status=404)
-        dentists = [{'id':d.id, 'name':d.name,'schedules': list(d.schedule.filter(Q(weekday=day)|Q(weekday='All'),branch_name=branch).values('id', 'start', 'end','weekday'))} for d in dentists_set]
+            return JsonResponse({'message': "Sorry, no dentist is available"}, status=404)
+
+        dentists = []
+
+        for dentist in dentists_set:
+            schedules = dentist.schedule.filter(
+                Q(weekday=day) | Q(weekday='All'),
+                branch_name=branch
+            ).values('id', 'start', 'end', 'weekday')
+
+            dentist_data = {
+                'id': dentist.id,
+                'name': dentist.get_full_name(),
+                'schedules': list(schedules)
+            }
+
+            dentists.append(dentist_data)
+
         return JsonResponse({'data': dentists})
 
+    return JsonResponse({'message': 'Invalid request'}, status=400)
 
 
 #list appointments of a doctor
