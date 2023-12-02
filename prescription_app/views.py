@@ -1,4 +1,5 @@
 import json
+from datetime import date, timedelta
 
 
 from django.db.models import F
@@ -17,6 +18,41 @@ from .models import TestResult
 
 
 from patient_appointment.models import Appointment
+
+
+@login_required
+def prescribe_view(request, appointment_id):
+    try:
+        appointment = Appointment.objects.get(id=appointment_id)
+        prescription = Prescription.objects.get(appointment=appointment)
+        
+        is_expired = check_medication_expiry(prescription.medication)
+        next_refill_date = calculate_next_refill_date(prescription)
+        
+        prescription_data = {
+            'patient_name': appointment.patient.name,
+            'medication': prescription.medication,
+            'dosage': prescription.dosage,
+            'instructions': prescription.instructions,
+            'is_expired': is_expired,
+            'next_refill_date': next_refill_date,
+        }
+
+        return render(request, 'prescription_app/prescription.html', {'prescription': prescription_data})
+    
+    except Appointment.DoesNotExist:
+        return HttpResponse("Appointment not found.")
+    
+    except Prescription.DoesNotExist:
+        return HttpResponse("Prescription not found.")
+
+def check_medication_expiry(medication):
+    today = date.today()
+    return medication.expiry_date < today
+
+def calculate_next_refill_date(prescription):
+    today = date.today()
+    return today + timedelta(days=30)
 
 
 @login_required

@@ -47,32 +47,37 @@
 
 
  $("#date").on('changeDate', function() {
-     $("#appointmentFormError").html("");
-     var date = $("#date").val();
-     var branch = $("input:radio[name='branch']:checked").val();
-     console.log(branch);
-     var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-     var weekday = new Date(date).getDay();
-     var day = weekdays[weekday];
-     $("#schedule").empty();
-     $("#schedule").append($("<option>", { 'value': '', 'text': "Select A Date First", 'disabled': true, 'selected': true }));
+    $("#appointmentFormError").html("");
+    var date = $("#date").val();
+    var branch = $("input:radio[name='branch']:checked").val();
+    console.log(branch);
+    var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var weekday = new Date(date).getDay();
+    var day = weekdays[weekday];
+    $("#schedule").empty();
+    $("#schedule").append($("<option>", { 'value': '', 'text': "Select A Date First", 'disabled': true, 'selected': true }));
+  
+    $.ajax({
+      url: "appointment/dentist/schedules/",
+      type: "POST",
+      data: { "day": day, 'branch': branch },
+      dataType: "json",
+      success: function(response) {
+        var schedules = response.data;
+        for (var i = 0; i < schedules.length; i++) {
+          $("#schedule").append($("<option>", { 'value': schedules[i].id, 'text': schedules[i].weekday + " From: " + schedules[i].start + " To: " + schedules[i].end }));
+        }
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        if (xhr.status == 404) {
+          var errmsg = xhr.responseJSON.message;
+          $("#appointmentFormError").append("<p>" + errmsg + "</p>");
+        }
+      }
+    });
+  });
 
-
-     $.post("/appointment/dentist/schedules/", { "day": day, 'branch': branch }, function(response) {
-
-         var schedules = response.data;
-
-         for (var i = 0; i < schedules.length; i++) {
-             $("#schedule").append($("<option>", { 'value': schedules[i].id, 'text': schedules[i].weekday + " From: " + schedules[i].start + " To: " + schedules[i].end }));
-         }
-     }).fail(function(response) {
-         if (response.status == 404) {
-             var errmsg = response.responseJSON.message;
-             $("#appointmentFormError").append("<p>" + errmsg + "</p>");
-         }
-     });
- });
-
+  
  $("#appointmentForm").validate();
  $("#medicineForm").validate();
  $("#testForm").validate();
