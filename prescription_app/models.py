@@ -61,7 +61,7 @@ TEST_RESULT_UNIT_CHOICES = [
 class History(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="history")
     appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE, related_name="history")
-    dentist = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name='history')
+    doctor = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name='history')
     weight = models.PositiveIntegerField(blank=True, null=True)
     temperature = models.DecimalField(max_digits=5, decimal_places=2,blank=True, null=True)
     pulse = models.PositiveIntegerField(blank=True, null=True)

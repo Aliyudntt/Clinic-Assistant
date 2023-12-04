@@ -42,16 +42,16 @@ class TestAdmin(admin.ModelAdmin):
 
 #admin for TestResult
 class TestResultAdmin(admin.ModelAdmin):
-    list_display = ('get_patient', 'get_dentist','test',  'created_at', 'result', 'unit', 'comment', 'created_at', 'diagnostic_center')
+    list_display = ('get_patient', 'get_doctor','test',  'created_at', 'result', 'unit', 'comment', 'created_at', 'diagnostic_center')
     list_filter = ('test',)
-    search_fields = ['get_patient', 'get_dentist', 'test',]
+    search_fields = ['get_patient', 'get_doctor', 'test',]
     ordering = ['-created_at']
 
     def get_patient(self,obj):
         return obj.prescriptoin.history.patient.name
 
-    def get_dentist(self,obj):
-        return obj.prescription.history.dentist.name
+    def get_doctor(self,obj):
+        return obj.prescription.history.doctor.name
 
 
 
@@ -68,24 +68,24 @@ class TestResultInline(admin.TabularInline):
 
 
 class PrescriptionAdmin(admin.ModelAdmin):
-    list_display = ['get_patient', 'get_dentist', 'created_at']
-    search_fields = ['get_patient', 'get_dentist', 'created_at']
+    list_display = ['get_patient', 'get_doctor', 'created_at']
+    search_fields = ['get_patient', 'get_doctor', 'created_at']
     ordering = ['-created_at',]
     inlines = [MedicineInline, TestResultInline]
 
     def get_patient(self,obj):
         return obj.history.patient.name
 
-    def get_dentist(self,obj):
-        return obj.history.dentist.name
+    def get_doctor(self,obj):
+        return obj.history.doctor.name
 
 
 
 
 #history admin 
 class HistoryAdmin(admin.ModelAdmin):
-    list_display = ['patient', 'dentist', 'appointment_id', 'created_at']
-    search_fields = ['patient', 'dentist', 'appointment_id']
+    list_display = ['patient', 'doctor', 'appointment_id', 'created_at']
+    search_fields = ['patient', 'doctor', 'appointment_id']
     ordering = ['-created_at']
 
 #register Admins to models

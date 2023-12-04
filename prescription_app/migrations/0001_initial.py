@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                 ('pain_relieved_by', models.CharField(blank=True, max_length=30, null=True)),
                 ('created_at', models.DateTimeField(auto_now=True)),
                 ('appointment', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='history', to='patient_appointment.Appointment')),
-                ('dentist', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='history', to=settings.AUTH_USER_MODEL)),
+                ('doctor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='history', to=settings.AUTH_USER_MODEL)),
                 ('patient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='history', to='patient_appointment.Patient')),
             ],
             options={

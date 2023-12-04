@@ -35,7 +35,7 @@ APPOINTMENT_STATUS = [
 
 class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="appointment")
-    dentist = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name="appointment")
+    doctor = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name="appointment")
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="appointment")
     date = models.DateField()
     status = models.CharField(max_length=9, choices=APPOINTMENT_STATUS, default='pending')
@@ -72,7 +72,7 @@ def send_appointment_notification(sender,instance, created, **kwargs):
         #queue cellery for reminder
         if instance.patient.email:
             to = instance.patient.email
-            message = "Your apppointment is fixed with %s on %s at schedule %s-%s at %s branch." %(instance.dentist.name, instance.date, instance.schedule.start, instance.schedule.end, instance.schedule.branch_name)
+            message = "Your apppointment is fixed with %s on %s at schedule %s-%s at %s branch." %(instance.doctor.name, instance.date, instance.schedule.start, instance.schedule.end, instance.schedule.branch_name)
             send_confirmation_email_service(to,message)
     else:
         if instance.status == "cancelled":
@@ -81,18 +81,18 @@ def send_appointment_notification(sender,instance, created, **kwargs):
             #remove from cellery task queue
             if instance.patient.email:
                 to = instance.patient.email
-                message = "Your apppointment with %s on %s at schedule %s-%s at %s branch is cancelled." %(instance.dentist.name, instance.date, instance.schedule.start, instance.schedule.end,instance.schedule.branch_name)
+                message = "Your apppointment with %s on %s at schedule %s-%s at %s branch is cancelled." %(instance.doctor.name, instance.date, instance.schedule.start, instance.schedule.end,instance.schedule.branch_name)
                 send_confirmation_email_service(to,message)
         else:
             if instance.patient.email:
                 to = instance.patient.email
-                message = "Your apppointment with %s is rescheduled on %s at schedule %s-%s at %s branch." %(instance.dentist.name, instance.date, instance.schedule.start, instance.schedule.end,instance.schedule.branch_name)
+                message = "Your apppointment with %s is rescheduled on %s at schedule %s-%s at %s branch." %(instance.doctor.name, instance.date, instance.schedule.start, instance.schedule.end,instance.schedule.branch_name)
                 send_confirmation_email_service(to,message)
     
     if instance.status != "cancelled":
         if instance.patient.email:
             to = instance.patient.email
-            message = "You have an appointment today with %s schedule: %s-%s at %s branch."%(instance.dentist.name, instance.date, instance.schedule.start, instance.schedule.end,instance.schedule.branch_name)
+            message = "You have an appointment today with %s schedule: %s-%s at %s branch."%(instance.doctor.name, instance.date, instance.schedule.start, instance.schedule.end,instance.schedule.branch_name)
             date = datetime.datetime.combine(instance.date, instance.schedule.start)
             eta = date - datetime.timedelta(hours=2)
             appointment_reminder_service(to,message,eta)

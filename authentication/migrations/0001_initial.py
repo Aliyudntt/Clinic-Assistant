@@ -34,8 +34,8 @@ class Migration(migrations.Migration):
                 ('is_admin', models.BooleanField(default=False)),
             ],
             options={
-                'verbose_name': 'Dentist',
-                'verbose_name_plural': 'Dentists',
+                'verbose_name': 'Doctor',
+                'verbose_name_plural': 'Doctors',
             },
             managers=[
                 ('objects', authentication.models.AuthUserManager()),
@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                 ('branch_name', models.CharField(choices=[('gazipur', 'GAZIPUR'), ('uttara', 'UTTARA')], default='uttara', max_length=15)),
                 ('weekday', models.CharField(choices=[('All', 'ALL'), ('Sunday', 'SUNDAY'), ('Monday', 'MONDAY'), ('Tuesday', 'TUESDAY'), ('Wednesday', 'WEDNESDAY'), ('Thursday', 'THURSDAY'), ('Friday', 'FRIDAY'), ('Saturday', 'SATURDAY')], default='Sunday', max_length=10)),
                 ('max_patient', models.PositiveIntegerField(default=15)),
-                ('dentist', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='schedule', to=settings.AUTH_USER_MODEL)),
+                ('doctor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='schedule', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]
