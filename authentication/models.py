@@ -90,8 +90,8 @@ class AuthUser(AbstractBaseUser):
 
 
     class Meta:
-        verbose_name = "Doctor"
-        verbose_name_plural="Doctors"
+        verbose_name = "Dentist"
+        verbose_name_plural="Dentists"
 
 
 WEEK_DAYS = [
@@ -107,7 +107,7 @@ WEEK_DAYS = [
 
 
 class Schedule(models.Model):
-    doctor = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name='schedule')
+    dentist = models.ForeignKey(AuthUser, on_delete=models.CASCADE, related_name='schedule')
     start = models.TimeField()
     end = models.TimeField()
     branch_name = models.CharField(max_length=15, choices=BRANCH_CHOICES, default="uttara")
@@ -122,5 +122,5 @@ class Schedule(models.Model):
             NON_FIELD_ERRORS: ["Schedule Start time cannot be greater than schedule end time"]
         })
     def __str__(self):
-        return "%s %s %s-%s" %(self.doctor.name, self.weekday, str(self.start), str(self.end))
+        return "%s %s %s-%s" %(self.dentist.name, self.weekday, str(self.start), str(self.end))
 

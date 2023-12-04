@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('start', models.TimeField()),
                 ('end', models.TimeField()),
-                ('branch_name', models.CharField(choices=[('gazipur', 'GAZIPUR'), ('uttara', 'UTTARA')], default='uttara', max_length=15)),
+                ('branch_name', models.CharField(choices=[('city', 'CITY'), ('main', 'MAIN')], default='main', max_length=15)),
                 ('weekday', models.CharField(choices=[('All', 'ALL'), ('Sunday', 'SUNDAY'), ('Monday', 'MONDAY'), ('Tuesday', 'TUESDAY'), ('Wednesday', 'WEDNESDAY'), ('Thursday', 'THURSDAY'), ('Friday', 'FRIDAY'), ('Saturday', 'SATURDAY')], default='Sunday', max_length=10)),
                 ('max_patient', models.PositiveIntegerField(default=15)),
                 ('doctor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='schedule', to=settings.AUTH_USER_MODEL)),
