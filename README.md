@@ -10,4 +10,4 @@
 
 ● Background task scheduling for intensive tasks using celerey 
 
-● Technology: Django, Celery, Redis, Postgresql
+● Technology: Django, Celery, Redis, Postgresql, SQLite
