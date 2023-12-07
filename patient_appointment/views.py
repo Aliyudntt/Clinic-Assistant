@@ -28,7 +28,7 @@ def schedule_appointmet(request):
         email = request.POST.get('email',"")
         gender = request.POST.get('gender')
         contact_number = request.POST.get('contact_number').replace(' ', '').replace('-', '')
-        doctor = int(request.POST.get('doctor'))
+        dentist = int(request.POST.get('dentist'))
         schedule = int(request.POST.get('schedule'))
         date = datetime.datetime.strptime(request.POST.get('date'), "%m/%d/%Y").date()
         
@@ -56,7 +56,7 @@ def schedule_appointmet(request):
             appointment = Appointment.objects.create(
                 date = date,
                 patient_id = patient.id,
-                doctor_id = doctor,
+                dentist_id = dentist,
                 schedule_id = schedule
             )
 
@@ -79,7 +79,7 @@ def schedule_list(request):
 
         print(request.POST)
         
-        doctors_set = set(
+        dentists_set = set(
             User.objects.filter(
                 Q(schedule__weekday=day) &
                 Q(schedule__branch_name=branch) &
@@ -88,13 +88,13 @@ def schedule_list(request):
             ).prefetch_related('schedule')
         )
 
-        if len(doctors_set) == 0:
-            return JsonResponse({'message': "Sorry, no doctor is available"}, status=404)
+        if len(dentists_set) == 0:
+            return JsonResponse({'message': "Sorry, no dentist is available"}, status=404)
 
-        doctors = []
+        dentists = []
 
-        for doctor in doctors_set:
-            schedules = doctor.schedule.filter(
+        for dentist in dentists_set:
+            schedules = dentist.schedule.filter(
                 Q(weekday=day) | Q(weekday='All'),
                 branch_name=branch
             ).values('id', 'start', 'end', 'weekday')
@@ -114,10 +114,10 @@ def schedule_list(request):
 
     return JsonResponse({'message': 'Invalid request'}, status=400)
 
-#list appointments of a doctor
+#list appointments of a dentist
 @login_required
 def today_appointments(request):
-    appointments = Appointment.objects.prefetch_related().filter(doctor=request.user, date=datetime.date.today()).order_by('-created_at',)
+    appointments = Appointment.objects.prefetch_related().filter(dentist=request.user, date=datetime.date.today()).order_by('-created_at',)
     return render(request,'dashboard/appointment_list.html', {'appointments':appointments,'headline':"Today's Appointments"})
 
 
@@ -125,14 +125,14 @@ def today_appointments(request):
 #list all upcoming pending appointments
 @login_required
 def upcoming_appointments(request):
-    appointments = Appointment.objects.prefetch_related().filter(doctor=request.user,status="pending").order_by('-created_at',)
+    appointments = Appointment.objects.prefetch_related().filter(dentist=request.user,status="pending").order_by('-created_at',)
     return render(request,'dashboard/appointment_list.html', {'appointments':appointments,'headline':"Upcoming Appointments"})
 
 
-#list all appointments of a doctor
+#list all appointments of a dentist
 @login_required
 def all_appointment(request):
-    appointments = Appointment.objects.prefetch_related().filter(doctor=request.user).order_by('-created_at',)
+    appointments = Appointment.objects.prefetch_related().filter(dentist=request.user).order_by('-created_at',)
     return render(request,'dashboard/appointment_list.html', {'appointments':appointments,'headline':"All Appointments"})
 
 
@@ -140,11 +140,11 @@ def all_appointment(request):
 @login_required
 def search_appointment_by_contact_numer(request):
     contact_number = request.POST.get('search_param').replace(' ', '').replace('-', '')    
-    appointments = Appointment.objects.prefetch_related().filter(doctor=request.user, patient__contact_number=contact_number)
+    appointments = Appointment.objects.prefetch_related().filter(dentist=request.user, patient__contact_number=contact_number)
     return render(request,'dashboard/appointment_list.html', {'appointments':appointments,'headline':"Search Results"})
 
 
-#create unregistered appointment on the fly by doctor
+#create unregistered appointment on the fly by dentist
 @login_required
 def unregistered_appointment(request):
     if request.method=="POST":
@@ -153,7 +153,7 @@ def unregistered_appointment(request):
         email = request.POST.get('email',"")
         gender = request.POST.get('gender')
         contact_number = request.POST.get('contact_number').replace(' ', '').replace('-', '')
-        doctor = request.user.id
+        dentist = request.user.id
         schedule = int(request.POST.get('schedule'))
         date = datetime.datetime.strptime(request.POST.get('date'), "%m/%d/%Y").date()
         
@@ -164,16 +164,16 @@ def unregistered_appointment(request):
 
         if Appointment.objects.filter(schedule__id=schedule, date=date).count() >= schedule_object.max_patient:
             messages.warning(request,"No slot is empty at the selected schedule")
-            return HttpResponseRedirect("/appointment/doctor/add/")
+            return HttpResponseRedirect("/appointment/dentist/add/")
 
         if date == datetime.date.today() and schedule_object.start < datetime.datetime.now().time():
             messages.error(request, "Selected schedule has passed for today")
-            return HttpResponseRedirect("/appointment/doctor/add/")
+            return HttpResponseRedirect("/appointment/dentist/add/")
 
         try:
             patient = Patient.objects.get(contact_number=contact_number)
             messages.error(request, "A patient is already registered with contact number" + contact_number + " Try a different contact number")
-            return HttpResponseRedirect("/appointment/doctor/add/")
+            return HttpResponseRedirect("/appointment/dentist/add/")
 
         except:
             patient = Patient.objects.create(
@@ -187,7 +187,7 @@ def unregistered_appointment(request):
             appointment = Appointment.objects.create(
                 date = date,
                 patient_id = patient.id,
-                doctor_id = doctor,
+                dentist_id = dentist,
                 schedule_id = schedule
             )
 
@@ -197,10 +197,10 @@ def unregistered_appointment(request):
     return render(request, "dashboard/add_unregistered_appointment.html",{});
 
 
-#get a doctors appointment
+#get a dentists appointment
 @csrf_exempt
 @login_required
-def doctor_schedule_list(request):
+def dentist_schedule_list(request):
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         print(request.POST)
         day = request.POST.get('day')
@@ -219,7 +219,7 @@ def edit_appointment(request, id):
     appointment = None
 
     try:
-        appointment = Appointment.objects.prefetch_related().get(doctor=request.user, id=int(id))
+        appointment = Appointment.objects.prefetch_related().get(dentist=request.user, id=int(id))
 
     except:
         messages.error(request, "You are not authorized to access the appointment or it doesn't exist")
@@ -241,4 +241,4 @@ def edit_appointment(request, id):
         messages.success(request, "Successfully edited appointment id: " + str(id))
         return HttpResponseRedirect("/appointment/edit/" + str(id)+"/")
 
-    return render(request, "dashboard/appointment_edit.html", {'appointment': appointment, 'patient': appointment.patient, 'schedule': appointment.schedule, 'schedules': appointment.doctor.schedule.all()})
+    return render(request, "dashboard/appointment_edit.html", {'appointment': appointment, 'patient': appointment.patient, 'schedule': appointment.schedule, 'schedules': appointment.dentist.schedule.all()})

@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(choices=[('pending', 'PENDING'), ('vistied', 'VISITED'), ('cancelled', 'CANCELLED'), ('absent', 'ABSENT')], default='pending', max_length=9)),
                 ('secret', models.CharField(blank=True, max_length=8)),
                 ('created_at', models.DateTimeField(auto_now=True)),
-                ('doctor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='appointment', to=settings.AUTH_USER_MODEL)),
+                ('dentist', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='appointment', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(

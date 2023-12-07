@@ -1,17 +1,17 @@
-{%extends 'mainsite/main_base.html'%} {%load static%} {%block content%} {%for doctor in doctors%}
+{%extends 'mainsite/main_base.html'%} {%load static%} {%block content%} {%for dentist in dentists%}
 <div class="container">
     <div class="row">
         <div class="col-lg-4">
-            <img src="{{doctor.get_image}}" style="height: 240px; width: 180px;">
+            <img src="{{dentist.get_image}}" style="height: 240px; width: 180px;">
         </div>
         <div class="col-lg-4 text-success">
-            <h3>{{doctor.name}}</h3>
+            <h3>{{dentist.name}}</h3>
             <p>
-                {{doctor.about}}
+                {{dentist.about}}
             </p>
             <div>
                 <h5>Schedule: </h5>
-                {%for schedule in doctor.schedule.all%}
+                {%for schedule in dentist.schedule.all%}
                 <p>{{schedule.day}} {{schedule.start|time:"g:iA"}}-{{schedule.end|time:"g:iA"}}</p>
                 {%endfor%}
             </div>

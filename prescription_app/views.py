@@ -177,7 +177,7 @@ def prescription_add(request, appointment_id):
         history = History(**data)
         history.patient = appoinment.patient
         history.appointment = appoinment
-        history.doctor = request.user
+        history.dentist = request.user
         history.save()
         
         prescription = Prescription()
@@ -232,7 +232,7 @@ def history_detail(request, id):
     history = None
     
     try:
-        history = History.objects.get(id=id,doctor=request.user)
+        history = History.objects.get(id=id,dentist=request.user)
     except:
         messages.error(request,"Error: You are not authorized to view this history")
         return HttpResponseRedirect('/prescription/history/')
@@ -242,7 +242,7 @@ def history_detail(request, id):
 
 @login_required
 def historylist(request):
-    histories = History.objects.prefetch_related().filter(doctor=request.user)
+    histories = History.objects.prefetch_related().filter(dentist=request.user)
     return render(request,"prescription_app/history_list.html",{'histories':histories})
 
 
@@ -260,7 +260,7 @@ from .services import send_prescription
 def to_pdf(request,id):
     history = None
     try:
-        history = History.objects.get(doctor=request.user, id=id)
+        history = History.objects.get(dentist=request.user, id=id)
     except:
         messages.error(request,"Error: You are not authorized to view this history")
         return HttpResponseRedirect('/prescription/history/')
@@ -272,7 +272,7 @@ def to_pdf(request,id):
     
     patient = history.patient
     prescription = history.prescription
-    doctor = history.doctor
+    dentist = history.dentist
 
     patientString = '''Name: %s
 Age:%s 
@@ -285,14 +285,14 @@ Contact Number: %s
     textobject.setTextOrigin(inch, inch*10.5)
     textobject.textLines(patientString)
     
-    doctorString = '''Doctor: %s
+    dentistString = '''Dentist: %s
     %s
     Contact: %s
     Email: %s
-'''%(doctor.name, doctor.about, doctor.contact_number,doctor.email)
+'''%(dentist.name, dentist.about, dentist.contact_number,dentist.email)
 
     textobject.moveCursor(inch*4.5,inch*-1)
-    textobject.textLines(doctorString)
+    textobject.textLines(dentistString)
     textobject.moveCursor(inch*-4.5, inch*.5)
     textobject.textLine("Rx,")
     

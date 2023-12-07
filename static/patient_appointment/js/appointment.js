@@ -4,7 +4,7 @@ $("#date").datepicker({
     autoclose: true
   });
   
-  var doctorlist = null;
+  var dentistlist = null;
   
   $("#date").on('changeDate', function() {
     $("#appointmentFormError").html("");
@@ -13,34 +13,34 @@ $("#date").datepicker({
     var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var weekday = new Date(date).getDay();
     var day = weekdays[weekday];
-    $("#doctor").empty();
-    $("#doctor").append($("<option>", { 'value': '', 'disabled': true, 'text': 'Select A Doctor', 'selected': true }));
+    $("#dentist").empty();
+    $("#dentist").append($("<option>", { 'value': '', 'disabled': true, 'text': 'Select A Dentist', 'selected': true }));
     $("#schedule").empty();
-    $("#schedule").append($("<option>", { 'value': '', 'text': "Select A Doctor First", 'disabled': true, 'selected': true }));
+    $("#schedule").append($("<option>", { 'value': '', 'text': "Select A Dentist First", 'disabled': true, 'selected': true }));
   
     $.ajax({
-      url: "appointment/doctor/schedules/",
+      url: "appointment/dentist/schedules/",
       type: "POST",
       data: { "day": day, 'branch': branch },
       dataType: "json",
       success: function(response) {
-        doctorlist = response.data;
-        for (var i = 0; i < doctorlist.length; i++) {
-          $("#doctor").append($("<option>", { 'value': doctorlist[i].id, 'data-idx': i, 'text': doctorlist[i].name }));
+        dentistlist = response.data;
+        for (var i = 0; i < dentistlist.length; i++) {
+          $("#dentist").append($("<option>", { 'value': dentistlist[i].id, 'data-idx': i, 'text': dentistlist[i].name }));
         }
       },
       error: function(xhr, textStatus, errorThrown) {
         if (xhr.status == 404) {
-          var errmsg = "No Doctors available in the selected date";
+          var errmsg = "No Dentists available in the selected date";
           $("#appointmentFormError").append("<p>" + errmsg + "</p>");
         }
       }
     });
   });
   
-  $("#doctor").on("change", function() {
-    var idx = $("#doctor option:selected").attr('data-idx');
-    var schedules = doctorlist[idx].schedules;
+  $("#dentist").on("change", function() {
+    var idx = $("#dentist option:selected").attr('data-idx');
+    var schedules = dentistlist[idx].schedules;
     $("#schedule").empty();
     for (var i = 0; i < schedules.length; i++) {
       $("#schedule").append($("<option>", { 'value': schedules[i].id, 'text': schedules[i].weekday + " From: " + schedules[i].start + " To: " + schedules[i].end }));

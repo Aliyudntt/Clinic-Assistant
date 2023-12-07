@@ -58,7 +58,7 @@
     $("#schedule").append($("<option>", { 'value': '', 'text': "Select A Date First", 'disabled': true, 'selected': true }));
   
     $.ajax({
-      url: "appointment/doctor/schedules/",
+      url: "appointment/dentist/schedules/",
       type: "POST",
       data: { "day": day, 'branch': branch },
       dataType: "json",

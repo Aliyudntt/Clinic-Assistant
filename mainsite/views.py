@@ -12,9 +12,9 @@ def contactUs(request):
     return render(request, 'mainsite/contactUs.html', {'title': 'CDC | Contact Us'})
 
 
-def doctors(request):
-    doctors = AuthUser.objects.prefetch_related().filter(is_admin=False)
-    return render(request, 'mainsite/doctor.html', {'title':'CDC | Doctors', 'doctors':doctors})
+def dentists(request):
+    dentists = AuthUser.objects.prefetch_related().filter(is_admin=False)
+    return render(request, 'mainsite/dentist.html', {'title':'CDC | Dentists', 'dentists':dentists})
 
 
 def diagnosis(request):
