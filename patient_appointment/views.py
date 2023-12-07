@@ -66,9 +66,14 @@ def schedule_appointmet(request):
 
 
 
+from django.http import JsonResponse
+
 @csrf_exempt
 def schedule_list(request):
     if request.method == 'POST':
+        # Check if the request is an AJAX request
+        is_ajax = request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+        
         day = request.POST.get('day')
         branch = request.POST.get('branch')
 
@@ -94,18 +99,20 @@ def schedule_list(request):
                 branch_name=branch
             ).values('id', 'start', 'end', 'weekday')
 
-            doctor_data = {
-                'id': doctor.id,
-                'name': doctor.get_full_name(),
+            dentist_data = {
+                'id': dentist.id,
+                'name': dentist.get_full_name(),
                 'schedules': list(schedules)
             }
 
-            doctors.append(doctor_data)
+            dentists.append(dentist_data)
 
-        return JsonResponse({'data': doctors})
+        if is_ajax:
+            return JsonResponse({'data': dentist})
+        else:
+            return JsonResponse({'message': 'Invalid request'}, status=400)
 
     return JsonResponse({'message': 'Invalid request'}, status=400)
-
 
 #list appointments of a doctor
 @login_required
@@ -194,14 +201,16 @@ def unregistered_appointment(request):
 @csrf_exempt
 @login_required
 def doctor_schedule_list(request):
-    if request.is_ajax():
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         print(request.POST)
         day = request.POST.get('day')
         branch = request.POST.get('branch')
-        queryset = list(request.user.schedule.filter(Q(weekday=day)|Q(weekday='All'),branch_name=branch).values('id', 'start', 'end','weekday'))
+        queryset = list(request.user.schedule.filter(Q(weekday=day) | Q(weekday='All'), branch_name=branch).values('id', 'start', 'end', 'weekday'))
         if len(queryset) == 0:
-            return JsonResponse({"message":"No Schedule Available For the Selected Date"}, status=404)
+            return JsonResponse({"message": "No Schedule Available For the Selected Date"}, status=404)
         return JsonResponse({'data': queryset})
+    else:
+        return JsonResponse({'message': 'Invalid request'}, status=400)
 
 
 
