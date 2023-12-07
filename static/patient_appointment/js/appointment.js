@@ -31,7 +31,7 @@ $("#date").datepicker({
       },
       error: function(xhr, textStatus, errorThrown) {
         if (xhr.status == 404) {
-          var errmsg = xhr.responseJSON.message;
+          var errmsg = "No Doctors available in the selected date";
           $("#appointmentFormError").append("<p>" + errmsg + "</p>");
         }
       }

@@ -33,22 +33,26 @@
   "dependencies": {
     "bootstrap": "^5.3.2",
     "datepicker-xyermik": "^1.0.2",
+    "inputmask": "^5.0.8",
     "jquery": "^3.7.1",
     "jquery-validation": "^1.20.0"
   },
   "devDependencies": {
-    "commitplease": "2.3.1",
-    "grunt": "1.0.1",
-    "grunt-contrib-compress": "1.2.0",
+    "commitplease": "^2.7.10",
+    "grunt": "^1.6.1",
+    "grunt-contrib-compress": "^1.6.0",
     "grunt-contrib-concat": "1.0.1",
     "grunt-contrib-copy": "1.0.0",
-    "grunt-contrib-jshint": "1.0.0",
+    "grunt-contrib-jshint": "^3.2.0",
     "grunt-contrib-qunit": "1.2.0",
     "grunt-contrib-uglify": "1.0.1",
-    "grunt-contrib-watch": "1.0.0",
-    "grunt-jscs": "2.8.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-jscs": "^0.6.1",
     "grunt-text-replace": "0.4.0",
-    "qunitjs": "2.0.0"
+    "parcel": "^2.10.3",
+    "qunitjs": "2.0.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   },
   "keywords": [
     "jquery",

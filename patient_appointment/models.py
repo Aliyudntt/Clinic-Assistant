@@ -92,10 +92,11 @@ def send_appointment_notification(sender,instance, created, **kwargs):
     if instance.status != "cancelled":
         if instance.patient.email:
             to = instance.patient.email
-            message = "You have an appointment today with %s schedule: %s-%s at %s branch."%(instance.dentist.name, instance.date, instance.schedule.start, instance.schedule.end,instance.schedule.branch_name)
+            message = "You have an appointment today %s with %s schedule: %s-%s at %s branch."%(instance.dentist.name, instance.date, instance.schedule.start, instance.schedule.end,instance.schedule.branch_name)
             date = datetime.datetime.combine(instance.date, instance.schedule.start)
             eta = date - datetime.timedelta(hours=2)
             appointment_reminder_service(to,message,eta)
            
     def get_absolute_url(self):
         return f"/appointment/{self.id}/"
+    
