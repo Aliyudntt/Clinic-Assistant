@@ -48,7 +48,7 @@ $("#date").datepicker({
   });
   
   $("#contact_number").inputmask({
-    "mask": "+880 9999-999999"
+    "mask": "08012345678"
   });
   
   $("#appointmentForm").validate();

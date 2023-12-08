@@ -7,7 +7,7 @@
  });
 
  $("#search_param").inputmask({
-     "mask": "+880 9999-999999"
+     "mask": "08012345678"
  });
  $("#appointmentSearchBtn").click(function() {
      if ($("#search_param").val().length == 16) {
@@ -22,7 +22,7 @@
 
 
  $("#contact_number").inputmask({
-     "mask": "+880 9999-999999"
+     "mask": "08012345678"
  });
 
  $("#date").datepicker({
@@ -31,11 +31,7 @@
      autoclose: true
  });
 
- $("#idate").datepicker({
-     todayHighlight: true,
-     startDate: new Date(),
-     autoclose: true
- });
+
 
 
  function resetForm(id) {
