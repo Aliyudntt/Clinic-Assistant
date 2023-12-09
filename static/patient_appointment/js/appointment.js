@@ -47,9 +47,13 @@ $("#date").datepicker({
     }
   });
   
-  $("#contact_number").inputmask({
-    "mask": "08012345678"
-  });
+  const inputElement = document.getElementById('contact_number');
+  const maskOptions = {
+    mask: '+234 000 000 0000' // Define your desired input mask pattern
+  };
+  
+  const mask = IMask(inputElement, maskOptions);
+  
   
   $("#appointmentForm").validate();
   

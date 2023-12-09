@@ -1,3 +1,5 @@
+import { IMask } from 'imask';
+
  $(function() {
      $('input').iCheck({
          checkboxClass: 'icheckbox_flat-green',
@@ -6,13 +8,18 @@
      });
  });
 
- $("#search_param").inputmask({
-     "mask": "08012345678"
- });
- $("#appointmentSearchBtn").click(function() {
-     if ($("#search_param").val().length == 16) {
-         $("#appointmentSearchForm").submit();
-     }
+ const InputElement = document.getElementById('search_param');
+ const MaskOptions = {
+   mask: '+234 000 000 0000'
+ };
+ 
+ const Mask = IMask(inputElement, maskOptions);
+ 
+ const searchButton = document.getElementById('appointmentSearchBtn');
+ searchButton.addEventListener('click', function() {
+   if (mask.unmaskedValue.length === 11) {
+     document.getElementById('appointmentSearchForm').submit();
+   }
  });
 
  $("#appointmentTable").DataTable();
@@ -21,9 +28,12 @@
  $("#historyTable").DataTable();
 
 
- $("#contact_number").inputmask({
-     "mask": "08012345678"
- });
+ const inputElement = document.getElementById('contact_number');
+ const maskOptions = {
+   mask: '+234 000 000 0000' // Define your desired input mask pattern
+ };
+ 
+ const mask = IMask(inputElement, maskOptions);
 
  $("#date").datepicker({
      todayHighlight: true,
