@@ -19,7 +19,7 @@ $("#date").datepicker({
     $("#schedule").append($("<option>", { 'value': '', 'text': "Select A Dentist First", 'disabled': true, 'selected': true }));
   
     $.ajax({
-      url: "appointment/dentist/schedules/",
+      url: "appointment/schedules/",
       type: "POST",
       data: { "day": day, 'branch': branch },
       dataType: "json",

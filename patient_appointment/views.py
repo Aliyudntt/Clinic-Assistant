@@ -21,7 +21,7 @@ from .models import Appointment
 
 # Create your views here.
 @csrf_exempt
-def schedule_appointmet(request):
+def schedule_appointment(request):
     if request.method == "POST":
         name = request.POST.get('name')
         age = int(request.POST.get('age'))
@@ -114,7 +114,7 @@ def schedule_list(request):
 
     return JsonResponse({'message': 'Invalid request'}, status=400)
 
-#list appointments of a dentist
+#list appointments of a doctors
 @login_required
 def today_appointments(request):
     appointments = Appointment.objects.prefetch_related().filter(dentist=request.user, date=datetime.date.today()).order_by('-created_at',)
@@ -129,7 +129,7 @@ def upcoming_appointments(request):
     return render(request,'dashboard/appointment_list.html', {'appointments':appointments,'headline':"Upcoming Appointments"})
 
 
-#list all appointments of a dentist
+#list all appointments of a doctor
 @login_required
 def all_appointment(request):
     appointments = Appointment.objects.prefetch_related().filter(dentist=request.user).order_by('-created_at',)
@@ -144,7 +144,7 @@ def search_appointment_by_contact_numer(request):
     return render(request,'dashboard/appointment_list.html', {'appointments':appointments,'headline':"Search Results"})
 
 
-#create unregistered appointment on the fly by dentist
+#create unregistered appointment on the fly by doctor
 @login_required
 def unregistered_appointment(request):
     if request.method=="POST":
@@ -197,7 +197,7 @@ def unregistered_appointment(request):
     return render(request, "dashboard/add_unregistered_appointment.html",{});
 
 
-#get a dentists appointment
+#get a doctors appointment
 @csrf_exempt
 @login_required
 def dentist_schedule_list(request):
