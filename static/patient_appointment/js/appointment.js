@@ -1,3 +1,4 @@
+$(document).ready(function() {
 $("#date").datepicker({
     todayHighlight: true,
     startDate: new Date(),
@@ -57,7 +58,7 @@ $("#date").datepicker({
   
   $("#appointmentForm").validate();
   
-  $(document).ready(function() {
+
     $("#appointmentConfirmPrint").on('click', function() {
       $("#appointmentPrintable").printThis();
     });
