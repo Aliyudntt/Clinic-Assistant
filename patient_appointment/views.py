@@ -81,10 +81,10 @@ def schedule_list(request):
         
         dentists_set = set(
             User.objects.filter(
-                Q(schedule__weekday=day) &
-                Q(schedule__branch_name=branch) &
-                Q(is_active=True) &
-                Q(is_superuser=False)
+                schedule__weekday=day,
+                schedule__branch_name=branch,
+                is_active=True,
+                is_superuser=False
             ).prefetch_related('schedule')
         )
 
@@ -108,11 +108,9 @@ def schedule_list(request):
             dentists.append(dentist_data)
 
         if is_ajax:
-            return JsonResponse({'data': dentist})
+            return JsonResponse({'data': dentists})
         else:
             return JsonResponse({'message': 'Invalid request'}, status=400)
-
-    return JsonResponse({'message': 'Invalid request'}, status=400)
 
 #list appointments of a doctors
 @login_required

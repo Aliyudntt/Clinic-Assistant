@@ -86,3 +86,4 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(AuthUser, UserAdmin)
 admin.site.unregister(Group)
+admin.site.register(Schedule)
