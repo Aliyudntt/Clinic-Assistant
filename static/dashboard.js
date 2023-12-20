@@ -1,3 +1,9 @@
+$("#date").datepicker({
+  todayHighlight: true,
+  startDate: new Date(),
+  autoclose: true
+});
+
 import { IMask } from 'imask';
 
 $(document).ready(function() {
@@ -31,11 +37,7 @@ $(document).ready(function() {
   };
   const contactMask = IMask(contactInputElement, contactMaskOptions);
 
-  $("#date").datepicker({
-    todayHighlight: true,
-    startDate: new Date(),
-    autoclose: true
-  });
+
 
   function resetForm(id) {
     $(id)[0].reset();

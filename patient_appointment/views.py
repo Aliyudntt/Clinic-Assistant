@@ -65,9 +65,6 @@ def schedule_appointment(request):
 
 
 
-
-from django.http import JsonResponse
-
 @csrf_exempt
 def schedule_list(request):
     if request.method == 'POST':

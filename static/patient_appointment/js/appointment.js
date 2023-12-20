@@ -1,10 +1,10 @@
-var dentistlist = null;
-
 $("#date").datepicker({
   todayHighlight: true,
   startDate: new Date(),
   autoclose: true
 });
+
+var dentistlist;
 
 $("#date").on('changeDate', function() {
   $("#appointmentFormError").html("");
@@ -19,7 +19,7 @@ $("#date").on('changeDate', function() {
   $("#schedule").append($("<option>", { 'value': '', 'text': 'Select A Doctor First', 'disabled': true, 'selected': true }));
 
   $.ajax({
-    url: "/appointment/schedules/",
+    url: "/appointment/dentist_schedules",
     type: "POST",
     data: { "day": day, 'branch': branch },
     dataType: "json",
