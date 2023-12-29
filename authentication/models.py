@@ -9,8 +9,8 @@ from django.contrib.auth.models import (
 
 
 BRANCH_CHOICES=[
-    ('main campus', 'MAIN CAMPUS'),
-    ('city campus', 'CITY CAMPUS'),
+('gazipur', 'GAZIPUR'),
+    ('uttara', 'UTTARA'),
 ]
 
 
