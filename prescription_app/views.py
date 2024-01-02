@@ -24,8 +24,15 @@ from patient_appointment.models import Appointment
 def prescribe_view(request, appointment_id):
     try:
         appointment = Appointment.objects.get(id=appointment_id)
-        prescription = Prescription.objects.get(appointment=appointment)
         
+        # Check if the prescription already exists for the appointment
+        prescription, created = Prescription.objects.get_or_create(appointment=appointment)
+        
+        if created:
+            # Prescription was created
+            # Perform any necessary additional initialization
+            pass  # Placeholder for additional initialization
+            
         is_expired = check_medication_expiry(prescription.medication)
         next_refill_date = calculate_next_refill_date(prescription)
         

@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
     path('add/', views.schedule_appointment, name="create_appointment"),
-    path('appointment/dentist_schedules', views.schedule_list, name="schedule"),
+    path('appointment/dentist_schedules', views.dentist_schedules, name="schedules"),
     path('today/', views.today_appointments, name="today_appointments"),
     path('upcoming/', views.upcoming_appointments, name='upcoming_appointments'),
     path('all/', views.all_appointment, name='all_appointments'),

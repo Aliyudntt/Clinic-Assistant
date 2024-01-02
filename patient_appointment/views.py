@@ -12,6 +12,9 @@ from django.http import HttpRequest
 from django.contrib.auth.models import User
 
 
+from django.shortcuts import get_object_or_404, render, redirect
+from django.utils import timezone
+
 from authentication.models import AuthUser
 from authentication.models import Schedule
 
@@ -66,32 +69,25 @@ def schedule_appointment(request):
 
 
 @csrf_exempt
-def schedule_list(request):
-    if request.method == 'POST':
-        # Check if the request is an AJAX request
-        is_ajax = request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
-        
+def dentist_schedules(request):
+    if request.method == 'POST' and request.is_ajax():
         day = request.POST.get('day')
         branch = request.POST.get('branch')
 
-        print(request.POST)
-        
-        dentists_set = set(
-            User.objects.filter(
-                schedule__weekday=day,
-                schedule__branch_name=branch,
-                is_active=True,
-                is_superuser=False
-            ).prefetch_related('schedule')
-        )
+        dentists = User.objects.filter(
+            schedule__weekday=day,
+            schedule__branch_name=branch,
+            is_active=True,
+            is_superuser=False
+        ).prefetch_related('schedule')
 
-        if len(dentists_set) == 0:
-            return JsonResponse({'message': "Sorry, no dentist is available"}, status=404)
+        if not dentists:
+            return JsonResponse({'message': 'Sorry, no dentist is available'}, status=404)
 
-        dentists = []
-
-        for dentist in dentists_set:
-            schedules = dentist.schedule.filter(
+        dentist_list = []
+        for dentist in dentists:
+            schedules = Schedule.objects.filter(
+                Q(dentist=dentist),
                 Q(weekday=day) | Q(weekday='All'),
                 branch_name=branch
             ).values('id', 'start', 'end', 'weekday')
@@ -102,12 +98,11 @@ def schedule_list(request):
                 'schedules': list(schedules)
             }
 
-            dentists.append(dentist_data)
+            dentist_list.append(dentist_data)
 
-        if is_ajax:
-            return JsonResponse({'data': dentists})
-        else:
-            return JsonResponse({'message': 'Invalid request'}, status=400)
+        return JsonResponse({'data': dentist_list})
+
+    return JsonResponse({'message': 'Invalid request'}, status=400)
 
 #list appointments of a doctors
 @login_required
@@ -211,29 +206,29 @@ def dentist_schedule_list(request):
 
 @login_required
 def edit_appointment(request, id):
-    appointment = None
+    appointment = get_object_or_404(Appointment, dentist=request.user, id=id)
 
-    try:
-        appointment = Appointment.objects.prefetch_related().get(dentist=request.user, id=int(id))
-
-    except:
-        messages.error(request, "You are not authorized to access the appointment or it doesn't exist")
-        return HttpResponseRedirect("/appointment/today/")
-    
     if request.method == "POST":
-        #print(request.POST)
         appointment.status = request.POST.get('status')
 
-        if int(request.POST.get('schedule')) != appointment.schedule_id:
-            appointment.schedule_id = int(request.POST.get('schedule'))
-            appointment.status= "pending"
+        schedule_id = int(request.POST.get('schedule'))
+        if schedule_id != appointment.schedule_id:
+            appointment.schedule_id = schedule_id
+            appointment.status = "pending"
 
-        if request.POST.get('date')!='':
-            appointment.date = datetime.datetime.strptime(request.POST.get('date'), "%m/%d/%Y").date()
+        date = request.POST.get('date')
+        if date:
+            appointment.date = timezone.datetime.strptime(date, "%m/%d/%Y").date()
             appointment.status = "pending"
 
         appointment.save()
-        messages.success(request, "Successfully edited appointment id: " + str(id))
-        return HttpResponseRedirect("/appointment/edit/" + str(id)+"/")
+        messages.success(request, f"Successfully edited appointment id: {id}")
+        return redirect('edit_appointment', id=id)
 
-    return render(request, "dashboard/appointment_edit.html", {'appointment': appointment, 'patient': appointment.patient, 'schedule': appointment.schedule, 'schedules': appointment.dentist.schedule.all()})
+    schedules = appointment.dentist.schedule.all()
+    return render(request, "dashboard/appointment_edit.html", {
+        'appointment': appointment,
+        'patient': appointment.patient,
+        'schedule': appointment.schedule,
+        'schedules': schedules
+    })

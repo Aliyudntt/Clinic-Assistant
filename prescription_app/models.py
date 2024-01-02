@@ -102,6 +102,7 @@ class History(models.Model):
 
 #model for Prescription
 class Prescription(models.Model):
+    appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE, default=None)
     history = models.OneToOneField(History, on_delete=models.CASCADE, related_name='prescription')
     recommended_tests = models.ManyToManyField(Test)
     created_at = models.DateTimeField(auto_now=True)
