@@ -31,9 +31,10 @@ def schedule_appointment(request):
         email = request.POST.get('email',"")
         gender = request.POST.get('gender')
         contact_number = request.POST.get('contact_number').replace(' ', '').replace('-', '')
+        date = datetime.datetime.strptime(request.POST.get('date'), "%m/%d/%Y").date()
         dentist = int(request.POST.get('dentist'))
         schedule = int(request.POST.get('schedule'))
-        date = datetime.datetime.strptime(request.POST.get('date'), "%m/%d/%Y").date()
+        
         
         patient = None
 
@@ -69,16 +70,16 @@ def schedule_appointment(request):
 
 
 @csrf_exempt
-def dentist_schedules(request):
-    if request.method == 'POST' and request.is_ajax():
+def dentist_schedules(request: HttpRequest):
+    if  request.is_ajax():
         day = request.POST.get('day')
         branch = request.POST.get('branch')
 
-        dentists = User.objects.filter(
+        dentists = AuthUser.objects.filter(
             schedule__weekday=day,
             schedule__branch_name=branch,
             is_active=True,
-            is_superuser=False
+            is_admin=False
         ).prefetch_related('schedule')
 
         if not dentists:

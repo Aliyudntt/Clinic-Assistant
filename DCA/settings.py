@@ -177,6 +177,14 @@ task_serializer = 'pickle'
 result_serializer = 'json'
 timezone= 'Africa/Lagos'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Replace with your email host
+EMAIL_PORT = 587  # Replace with the appropriate port number
+EMAIL_USE_TLS = True  # Set it to True if your email provider requires TLS
+EMAIL_HOST_USER = 'aliyudntt10@gmail.com'  # Replace with your email address
+EMAIL_HOST_PASSWORD = 'ebmthjfjuunsmdch'  # Replace with your email password
+DEFAULT_FROM_EMAIL = 'YUMSUK Clinic <aliyudntt10@gmail.com>'  # Replace with your email address
+
 
 CACHES = {
     "default": {
